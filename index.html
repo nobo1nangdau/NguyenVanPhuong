@@ -126,10 +126,24 @@
   </audio>
 
   <script>
-    document.body.addEventListener("click", function () {
-      document.getElementById("bgm").play();
-    }, { once: true });
+    const bgm = document.getElementById("bgm");
+  
+    function enableAudio() {
+      bgm.muted = false;
+      bgm.volume = 1;
+  
+      bgm.play().catch(err => {
+        console.log("Không thể phát:", err);
+      });
+  
+      document.removeEventListener("click", enableAudio);
+      document.removeEventListener("scroll", enableAudio);
+    }
+  
+    document.addEventListener("click", enableAudio, { once: true });
+    document.addEventListener("scroll", enableAudio, { once: true });
   </script>
+  
 
   <!-- Hiệu ứng mưa buồn -->
   <canvas id="rain"></canvas>
